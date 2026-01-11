@@ -8,16 +8,21 @@ import re
 import json
 
 # --- 1. CONFIGURACIÓN DE PÁGINA ---
-st.set_page_config(
-    page_title="Planificador de Reuniones",
-    page_icon="📅",
-    layout="centered"
-)
+# Nota: Si este archivo se ejecuta desde Inicio.py, esta línea podría ser ignorada,
+# pero se deja por si se ejecuta de forma independiente.
+# Si te da error de "set_page_config", bórrala o coméntala.
+# st.set_page_config(page_title="Planificador de Reuniones", page_icon="📅", layout="centered")
 
 st.markdown("""
     <style>
+    /* Estilos de Botones y Contenedor */
     .stButton>button { width: 100%; border-radius: 5px; height: 3em; font-weight: bold;}
     .block-container { padding-top: 2rem; }
+    
+    /* --- OCULTAR ELEMENTOS DE LA INTERFAZ DE STREAMLIT --- */
+    #MainMenu {visibility: hidden;} /* Oculta el menú de hamburguesa */
+    header {visibility: hidden;}    /* Oculta la barra superior */
+    footer {visibility: hidden;}    /* Oculta el pie de página "Made with Streamlit" */
     </style>
     """, unsafe_allow_html=True)
 
@@ -98,6 +103,7 @@ def crear_pdf(tema, objetivo, agenda_lista, consejos):
 
     pdf = PDF()
     pdf.add_page()
+    # Función auxiliar para caracteres latinos
     def L(t): return t.encode('latin-1', 'replace').decode('latin-1') if t else ""
 
     pdf.set_font("Arial", 'B', 12)
